@@ -1,129 +1,494 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
+import copy
 
-# C extensions
-*.so
+n_1 = 0
 
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-pip-wheel-metadata/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
+n_2 = 0
 
-# PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
+n_3 = 0
 
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
+RCD = [
+    [0,0,0,0,0,0,0,0,0],
+    [1,1,1,1,1,1,1,1,1],
+    [2,2,2,2,2,2,2,2,2],
+    [3,3,3,3,3,3,3,3,3],
+    [4,4,4,4,4,4,4,4,4],
+    [5,5,5,5,5,5,5,5,5]]
 
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
+RCD_2 = [
+    [0,0,0,0,0,0,0,0,0],
+    [1,1,1,1,1,1,1,1,1],
+    [2,2,2,2,2,2,2,2,2],
+    [3,3,3,3,3,3,3,3,3],
+    [4,4,4,4,4,4,4,4,4],
+    [5,5,5,5,5,5,5,5,5]]
 
-# Translations
-*.mo
-*.pot
+RCD_3 = []
 
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
+RCD_4 = []
 
-# Flask stuff:
-instance/
-.webassets-cache
+RCD_5 = []
 
-# Scrapy stuff:
-.scrapy
+STOCK = []
 
-# Sphinx documentation
-docs/_build/
+COLOR = ["red","blue","white","green","orange","yellow"]
 
-# PyBuilder
-target/
+POSITION_1 = [100,10,100,190,100,100]
 
-# Jupyter Notebook
-.ipynb_checkpoints
+POSITION_2 = [[0,0],[30,0],[60,0],[0,30],[30,30],[60,30],[0,60],[30,60],[60,60]]
 
-# IPython
-profile_default/
-ipython_config.py
+POSITION_3 = [0,90,90,90,180,270]
+    
+def moves(e,b,u):
+    global RCD, RCD_2, RCD_3, stock
+    for z in range(18):
+        b.append([
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0]])
+    for i in range(18):
+        for x in range(9):
+            for y in range(6):
+                RCD_2[y][x] = e[y][x]
+        if i%3 == 0:
+            RCD_2[i//3][2] = e[i//3][0]
+            RCD_2[i//3][5] = e[i//3][1]
+            RCD_2[i//3][8] = e[i//3][2]
+            RCD_2[i//3][1] = e[i//3][3]
+            RCD_2[i//3][4] = e[i//3][4]
+            RCD_2[i//3][7] = e[i//3][5]
+            RCD_2[i//3][0] = e[i//3][6]
+            RCD_2[i//3][3] = e[i//3][7]
+            RCD_2[i//3][6] = e[i//3][8]
 
-# pyenv
-.python-version
+            if i//3 == 0:
+                RCD_2[3][2]= e[5][6]
+                RCD_2[3][1]= e[5][7]
+                RCD_2[3][0]= e[5][8]
 
-# pipenv
-#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
-#   However, in case of collaboration, if having platform-specific dependencies or dependencies
-#   having no cross-platform support, pipenv may install dependencies that don't work, or not
-#   install all needed dependencies.
-#Pipfile.lock
+                RCD_2[2][2]= e[3][2]
+                RCD_2[2][1]= e[3][1]
+                RCD_2[2][0]= e[3][0]
 
-# PEP 582; used by e.g. github.com/David-OConnor/pyflow
-__pypackages__/
+                RCD_2[1][2]= e[2][2]
+                RCD_2[1][1]= e[2][1]
+                RCD_2[1][0]= e[2][0]
 
-# Celery stuff
-celerybeat-schedule
-celerybeat.pid
+                RCD_2[5][6]= e[1][2]
+                RCD_2[5][7]= e[1][1]
+                RCD_2[5][8]= e[1][0]
 
-# SageMath parsed files
-*.sage.py
+            elif i//3 == 1:
+                RCD_2[2][0]= e[0][0]
+                RCD_2[2][3]= e[0][3]
+                RCD_2[2][6]= e[0][6]
 
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
+                RCD_2[4][0]= e[2][0]
+                RCD_2[4][3]= e[2][3]
+                RCD_2[4][6]= e[2][6]
 
-# Spyder project settings
-.spyderproject
-.spyproject
+                RCD_2[5][0]= e[4][0]
+                RCD_2[5][3]= e[4][3]
+                RCD_2[5][6]= e[4][6]
 
-# Rope project settings
-.ropeproject
+                RCD_2[0][0]= e[5][0]
+                RCD_2[0][3]= e[5][3]
+                RCD_2[0][6]= e[5][6]
 
-# mkdocs documentation
-/site
+            elif i//3 == 2:
+                RCD_2[3][0]= e[0][6]
+                RCD_2[3][3]= e[0][7]
+                RCD_2[3][6]= e[0][8]
 
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
+                RCD_2[4][2]= e[3][0]
+                RCD_2[4][1]= e[3][3]
+                RCD_2[4][0]= e[3][6]
 
-# Pyre type checker
-.pyre/
+                RCD_2[1][8]= e[4][2]
+                RCD_2[1][5]= e[4][1]
+                RCD_2[1][2]= e[4][0]
+
+                RCD_2[0][6]= e[1][8]
+                RCD_2[0][7]= e[1][5]
+                RCD_2[0][8]= e[1][2]
+
+            elif i//3 == 3:
+                RCD_2[5][8]= e[0][8]
+                RCD_2[5][5]= e[0][5]
+                RCD_2[5][2]= e[0][2]
+
+                RCD_2[4][8]= e[5][8]
+                RCD_2[4][5]= e[5][5]
+                RCD_2[4][2]= e[5][2]
+
+                RCD_2[2][8]= e[4][8]
+                RCD_2[2][5]= e[4][5]
+                RCD_2[2][2]= e[4][2]
+
+                RCD_2[0][8]= e[2][8]
+                RCD_2[0][5]= e[2][5]
+                RCD_2[0][2]= e[2][2]
+
+            elif i//3 == 4:
+                RCD_2[3][6]= e[2][6]
+                RCD_2[3][7]= e[2][7]
+                RCD_2[3][8]= e[2][8]
+
+                RCD_2[5][2]= e[3][6]
+                RCD_2[5][1]= e[3][7]
+                RCD_2[5][0]= e[3][8]
+
+                RCD_2[1][6]= e[5][2]
+                RCD_2[1][7]= e[5][1]
+                RCD_2[1][8]= e[5][0]
+
+                RCD_2[2][6]= e[1][6]
+                RCD_2[2][7]= e[1][7]
+                RCD_2[2][8]= e[1][8]
+
+            elif i//3 == 5:
+                RCD_2[3][8]= e[4][6]
+                RCD_2[3][5]= e[4][7]
+                RCD_2[3][2]= e[4][8]
+
+                RCD_2[0][2]= e[3][8]
+                RCD_2[0][1]= e[3][5]
+                RCD_2[0][0]= e[3][2]
+
+                RCD_2[1][0]= e[0][2]
+                RCD_2[1][3]= e[0][1]
+                RCD_2[1][6]= e[0][0]
+
+                RCD_2[4][6]= e[1][0]
+                RCD_2[4][7]= e[1][3]
+                RCD_2[4][8]= e[1][6]
+                    
+        elif i%3 == 1:
+            RCD_2[i//3][8] = e[i//3][0]
+            RCD_2[i//3][7] = e[i//3][1]
+            RCD_2[i//3][6] = e[i//3][2]
+            RCD_2[i//3][5] = e[i//3][3]
+            RCD_2[i//3][4] = e[i//3][4]
+            RCD_2[i//3][3] = e[i//3][5]
+            RCD_2[i//3][2] = e[i//3][6]
+            RCD_2[i//3][1] = e[i//3][7]
+            RCD_2[i//3][0] = e[i//3][8]
+
+            if i//3 == 0:
+                RCD_2[2][2]= e[5][6]
+                RCD_2[2][1]= e[5][7]
+                RCD_2[2][0]= e[5][8]
+
+                RCD_2[1][2]= e[3][2]
+                RCD_2[1][1]= e[3][1]
+                RCD_2[1][0]= e[3][0]
+
+                RCD_2[5][6]= e[2][2]
+                RCD_2[5][7]= e[2][1]
+                RCD_2[5][8]= e[2][0]
+                
+                RCD_2[3][2]= e[1][2]
+                RCD_2[3][1]= e[1][1]
+                RCD_2[3][0]= e[1][0]
+
+            elif i//3 == 1:
+                RCD_2[4][0]= e[0][0]
+                RCD_2[4][3]= e[0][3]
+                RCD_2[4][6]= e[0][6]
+
+                RCD_2[5][0]= e[2][0]
+                RCD_2[5][3]= e[2][3]
+                RCD_2[5][6]= e[2][6]
+
+                RCD_2[0][0]= e[4][0]
+                RCD_2[0][3]= e[4][3]
+                RCD_2[0][6]= e[4][6]
+
+                RCD_2[2][0]= e[5][0]
+                RCD_2[2][3]= e[5][3]
+                RCD_2[2][6]= e[5][6]
+
+            elif i//3 == 2:
+                RCD_2[4][2]= e[0][6]
+                RCD_2[4][1]= e[0][7]
+                RCD_2[4][0]= e[0][8]
+
+                RCD_2[1][8]= e[3][0]
+                RCD_2[1][5]= e[3][3]
+                RCD_2[1][2]= e[3][6]
+
+                RCD_2[0][6]= e[4][2]
+                RCD_2[0][7]= e[4][1]
+                RCD_2[0][8]= e[4][0]
+
+                RCD_2[3][0]= e[1][8]
+                RCD_2[3][3]= e[1][5]
+                RCD_2[3][6]= e[1][2]
+
+            elif i//3 == 3:
+                RCD_2[4][8]= e[0][8]
+                RCD_2[4][5]= e[0][5]
+                RCD_2[4][2]= e[0][2]
+
+                RCD_2[2][8]= e[5][8]
+                RCD_2[2][5]= e[5][5]
+                RCD_2[2][2]= e[5][2]
+
+                RCD_2[0][8]= e[4][8]
+                RCD_2[0][5]= e[4][5]
+                RCD_2[0][2]= e[4][2]
+
+                RCD_2[5][8]= e[2][8]
+                RCD_2[5][5]= e[2][5]
+                RCD_2[5][2]= e[2][2]
+
+            elif i//3 == 4:
+                RCD_2[5][2]= e[2][6]
+                RCD_2[5][1]= e[2][7]
+                RCD_2[5][0]= e[2][8]
+
+                RCD_2[1][6]= e[3][6]
+                RCD_2[1][7]= e[3][7]
+                RCD_2[1][8]= e[3][8]
+
+                RCD_2[2][6]= e[5][2]
+                RCD_2[2][7]= e[5][1]
+                RCD_2[2][8]= e[5][0]
+
+                RCD_2[3][6]= e[1][6]
+                RCD_2[3][7]= e[1][7]
+                RCD_2[3][8]= e[1][8]
+
+            elif i//3 == 5:
+                RCD_2[0][2]= e[4][6]
+                RCD_2[0][1]= e[4][7]
+                RCD_2[0][0]= e[4][8]
+
+                RCD_2[1][0]= e[3][8]
+                RCD_2[1][3]= e[3][5]
+                RCD_2[1][6]= e[3][2]
+
+                RCD_2[4][6]= e[0][2]
+                RCD_2[4][7]= e[0][1]
+                RCD_2[4][8]= e[0][0]
+
+                RCD_2[3][8]= e[1][0]
+                RCD_2[3][5]= e[1][3]
+                RCD_2[3][2]= e[1][6]
+
+        elif i%3 == 2:
+            RCD_2[i//3][6] = e[i//3][0]
+            RCD_2[i//3][3] = e[i//3][1]
+            RCD_2[i//3][0] = e[i//3][2]
+            RCD_2[i//3][7] = e[i//3][3]
+            RCD_2[i//3][4] = e[i//3][4]
+            RCD_2[i//3][1] = e[i//3][5]
+            RCD_2[i//3][8] = e[i//3][6]
+            RCD_2[i//3][5] = e[i//3][7]
+            RCD_2[i//3][2] = e[i//3][8]
+
+            if i//3 == 0:
+                RCD_2[1][2]= e[5][6]
+                RCD_2[1][1]= e[5][7]
+                RCD_2[1][0]= e[5][8]
+
+                RCD_2[5][6]= e[3][2]
+                RCD_2[5][7]= e[3][1]
+                RCD_2[5][8]= e[3][0]
+
+                RCD_2[3][2]= e[2][2]
+                RCD_2[3][1]= e[2][1]
+                RCD_2[3][0]= e[2][0]
+
+                RCD_2[2][2]= e[1][2]
+                RCD_2[2][1]= e[1][1]
+                RCD_2[2][0]= e[1][0]
+
+            elif i//3 == 1:
+                RCD_2[5][0]= e[0][0]
+                RCD_2[5][3]= e[0][3]
+                RCD_2[5][6]= e[0][6]
+
+                RCD_2[0][0]= e[2][0]
+                RCD_2[0][3]= e[2][3]
+                RCD_2[0][6]= e[2][6]
+
+                RCD_2[2][0]= e[4][0]
+                RCD_2[2][3]= e[4][3]
+                RCD_2[2][6]= e[4][6]
+
+                RCD_2[4][0]= e[5][0]
+                RCD_2[4][3]= e[5][3]
+                RCD_2[4][6]= e[5][6]
+                
+            elif i//3 == 2:
+                RCD_2[1][8]= e[0][6]
+                RCD_2[1][5]= e[0][7]
+                RCD_2[1][2]= e[0][8]
+
+                RCD_2[0][6]= e[3][0]
+                RCD_2[0][7]= e[3][3]
+                RCD_2[0][8]= e[3][6]
+
+                RCD_2[3][0]= e[4][2]
+                RCD_2[3][3]= e[4][1]
+                RCD_2[3][6]= e[4][0]
+
+                RCD_2[4][2]= e[1][8]
+                RCD_2[4][1]= e[1][5]
+                RCD_2[4][0]= e[1][2]
+
+            elif i//3 == 3:
+                RCD_2[2][8]= e[0][8]
+                RCD_2[2][5]= e[0][5]
+                RCD_2[2][2]= e[0][2]
+
+                RCD_2[0][8]= e[5][8]
+                RCD_2[0][5]= e[5][5]
+                RCD_2[0][2]= e[5][2]
+
+                RCD_2[5][8]= e[4][8]
+                RCD_2[5][5]= e[4][5]
+                RCD_2[5][2]= e[4][2]
+
+                RCD_2[4][8]= e[2][8]
+                RCD_2[4][5]= e[2][5]
+                RCD_2[4][2]= e[2][2]
+
+            elif i//3 == 4:
+                RCD_2[1][6]= e[2][6]
+                RCD_2[1][7]= e[2][7]
+                RCD_2[1][8]= e[2][8]
+
+                RCD_2[2][6]= e[3][6]
+                RCD_2[2][7]= e[3][7]
+                RCD_2[2][8]= e[3][8]
+                
+                RCD_2[3][6]= e[5][2]
+                RCD_2[3][7]= e[5][1]
+                RCD_2[3][8]= e[5][0]
+
+                RCD_2[5][2]= e[1][6]
+                RCD_2[5][1]= e[1][7]
+                RCD_2[5][0]= e[1][8]
+
+            elif i//3 == 5:
+                RCD_2[1][0]= e[4][6]
+                RCD_2[1][3]= e[4][7]
+                RCD_2[1][6]= e[4][8]
+
+                RCD_2[4][6]= e[3][8]
+                RCD_2[4][7]= e[3][5]
+                RCD_2[4][8]= e[3][2]
+
+                RCD_2[3][8]= e[0][2]
+                RCD_2[3][5]= e[0][1]
+                RCD_2[3][2]= e[0][0]
+
+                RCD_2[0][2]= e[1][0]
+                RCD_2[0][1]= e[1][3]
+                RCD_2[0][0]= e[1][6]
+        for m in range(6):
+            for n in range(9):
+                b[(18*u)+i][m][n] = RCD_2[m][n]
+
+moves(RCD,RCD_3,0)
+for u in range(len(RCD_3)):
+    moves(RCD_3[u],STOCK,u)
+
+
+for u in range(len(STOCK)):
+    RCD_4.append([
+    [0,0,0,0,0,0,0,0,0],
+    [1,1,1,1,1,1,1,1,1],
+    [2,2,2,2,2,2,2,2,2],
+    [3,3,3,3,3,3,3,3,3],
+    [4,4,4,4,4,4,4,4,4],
+    [5,5,5,5,5,5,5,5,5]])
+    for t in range(len(RCD_3)):
+        if STOCK[u] == RCD_3[t] or STOCK[u] == RCD:
+            break
+        if t == len(RCD_3)-1:
+            for x in range(6):
+                for y in range(9):
+                    RCD_4[u][x][y] = STOCK[u][x][y]
+
+for u in range(RCD_4.count(RCD)):
+    RCD_4.remove(RCD)
+
+RCD_5 = copy.deepcopy(RCD_4)
+
+for u in range(len(RCD_4)):
+    for v in range(len(RCD_4)):
+        if RCD_4[u] == RCD_4[v]:
+            for w in range(RCD_5.count(RCD_4[v])-1):
+                RCD_5.remove(RCD_4[v])
+
+Comb_1 = []
+Comb_2 = []
+Comb_3 = []
+Comb_4 = []
+Comb_5 = []
+Comb_6 = []
+Comb_7 = []
+Comb_8 = []
+Comb_9 = []
+Comb_10 = []
+Comb_11 = []
+Comb_12 = []
+Comb_13 = []
+Comb_14 = []
+Comb_15 = []
+Comb_16 = []
+Comb_17 = []
+Comb_18 = []
+
+Comb_1 = copy.deepcopy(RCD_3)
+Comb_2 = copy.deepcopy(RCD_5)
+
+List_of_Combinations = [
+    Comb_1,Comb_2,Comb_3,Comb_4,Comb_5,Comb_6,Comb_7,Comb_8,Comb_9,Comb_10,Comb_11,Comb_12,Comb_13,Comb_14,Comb_15,Comb_16,Comb_17,Comb_18]
+
+for h in range(16):
+    RCD_6 = []
+    RCD_7 = []
+    for u in range(len(List_of_Combinations[h+1])):
+                   moves(List_of_Combinations[h+1][u],RCD_6,u)
+
+    for u in range(len(RCD_6)):
+        RCD_7.append([
+        [0,0,0,0,0,0,0,0,0],
+        [1,1,1,1,1,1,1,1,1],
+        [2,2,2,2,2,2,2,2,2],
+        [3,3,3,3,3,3,3,3,3],
+        [4,4,4,4,4,4,4,4,4],
+        [5,5,5,5,5,5,5,5,5]])
+        for t in range(len(List_of_Combinations[h+1])):
+            if RCD_6[u] == List_of_Combinations[h+1][t] or RCD_6[u] == RCD:
+                break
+            if t == len(List_of_Combinations[h+1])-1:
+                for x in range(6):
+                    for y in range(9):
+                        RCD_7[u][x][y] = RCD_6[u][x][y]
+
+    for u in range(RCD_7.count(RCD)):
+        RCD_7.remove(RCD)
+
+    for u in range(len(RCD_7)):
+        RCD_4.append(RCD_7[u])
+
+    List_of_Combinations[h+2] = copy.deepcopy(RCD_7)
+
+    for u in range(len(RCD_4)):
+        for v in range(len(RCD_4)):
+            if RCD_4[u] == RCD_4[v]:
+                for w in range(List_of_Combinations[h+2].count(RCD_4[v])-1):
+                    List_of_Combinations[h+2].remove(RCD_4[v])
+
+
+print("Combination of first Step: {}".format(len(RCD_3)))
+print("Combination of second Step: {}".format(len(RCD_5)))
+for u in range(16):
+    print(str(len(List_of_Combinations[u+2])))
