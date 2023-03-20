@@ -1,11 +1,5 @@
 import copy
 
-n_1 = 0
-
-n_2 = 0
-
-n_3 = 0
-
 RCD = [
     [0,0,0,0,0,0,0,0,0],
     [1,1,1,1,1,1,1,1,1],
@@ -28,18 +22,28 @@ RCD_4 = []
 
 RCD_5 = []
 
-STOCK = []
+RCD_6 = []
 
-COLOR = ["red","blue","white","green","orange","yellow"]
-
-POSITION_1 = [100,10,100,190,100,100]
-
-POSITION_2 = [[0,0],[30,0],[60,0],[0,30],[30,30],[60,30],[0,60],[30,60],[60,60]]
-
-POSITION_3 = [0,90,90,90,180,270]
+Comb_1 = []
+Comb_2 = []
+Comb_3 = []
+Comb_4 = []
+Comb_5 = []
+Comb_6 = []
+Comb_7 = []
+Comb_8 = []
+Comb_9 = []
+Comb_10 = []
+Comb_11 = []
+Comb_12 = []
+Comb_13 = []
+Comb_14 = []
+Comb_15 = []
+Comb_16 = []
+Comb_17 = []
+Comb_18 = []
     
 def moves(e,b,u):
-    global RCD, RCD_2, RCD_3, stock
     for z in range(18):
         b.append([
             [0,0,0,0,0,0,0,0,0],
@@ -394,12 +398,15 @@ def moves(e,b,u):
             for n in range(9):
                 b[(18*u)+i][m][n] = RCD_2[m][n]
 
-moves(RCD,RCD_3,0)
+#Investigating the combinations made in the first step from the fixed position, "RCD", and outputting it as "Comb_1"
+moves(RCD,Comb_1,0)
+
+#Investigating the combinations made in the second step from the first step, "Comb_1", and temporary outputting it as "RCD_3"
+for u in range(len(Comb_1)):
+    moves(Comb_1[u],RCD_3,u)
+
+#Erasing the combinations in "RCD_3" that are overlapping with the ones made in the previous step, "Comb_1" and temporary outputting it as "RCD_4"
 for u in range(len(RCD_3)):
-    moves(RCD_3[u],STOCK,u)
-
-
-for u in range(len(STOCK)):
     RCD_4.append([
     [0,0,0,0,0,0,0,0,0],
     [1,1,1,1,1,1,1,1,1],
@@ -407,58 +414,38 @@ for u in range(len(STOCK)):
     [3,3,3,3,3,3,3,3,3],
     [4,4,4,4,4,4,4,4,4],
     [5,5,5,5,5,5,5,5,5]])
-    for t in range(len(RCD_3)):
-        if STOCK[u] == RCD_3[t] or STOCK[u] == RCD:
+    for t in range(len(Comb_1)):
+        if RCD_3[u] == Comb_1[t] or RCD_3[u] == RCD:
             break
-        if t == len(RCD_3)-1:
+        if t == len(Comb_1)-1:
             for x in range(6):
                 for y in range(9):
-                    RCD_4[u][x][y] = STOCK[u][x][y]
-
+                    RCD_4[u][x][y] = RCD_3[u][x][y]
 for u in range(RCD_4.count(RCD)):
     RCD_4.remove(RCD)
 
-RCD_5 = copy.deepcopy(RCD_4)
+#Copying "RCD_4" into "Comb_2"
+Comb_2 = copy.deepcopy(RCD_4)
 
+#Erasing the combinations in "Comb_2" that are overlapping the ones made in the same step, "RCD_4"
 for u in range(len(RCD_4)):
     for v in range(len(RCD_4)):
         if RCD_4[u] == RCD_4[v]:
-            for w in range(RCD_5.count(RCD_4[v])-1):
-                RCD_5.remove(RCD_4[v])
-
-Comb_1 = []
-Comb_2 = []
-Comb_3 = []
-Comb_4 = []
-Comb_5 = []
-Comb_6 = []
-Comb_7 = []
-Comb_8 = []
-Comb_9 = []
-Comb_10 = []
-Comb_11 = []
-Comb_12 = []
-Comb_13 = []
-Comb_14 = []
-Comb_15 = []
-Comb_16 = []
-Comb_17 = []
-Comb_18 = []
-
-Comb_1 = copy.deepcopy(RCD_3)
-Comb_2 = copy.deepcopy(RCD_5)
+            for w in range(Comb_2.count(RCD_4[v])-1):
+                Comb_2.remove(RCD_4[v])
 
 List_of_Combinations = [
     Comb_1,Comb_2,Comb_3,Comb_4,Comb_5,Comb_6,Comb_7,Comb_8,Comb_9,Comb_10,Comb_11,Comb_12,Comb_13,Comb_14,Comb_15,Comb_16,Comb_17,Comb_18]
 
-for h in range(16):
-    RCD_6 = []
-    RCD_7 = []
-    for u in range(len(List_of_Combinations[h+1])):
-                   moves(List_of_Combinations[h+1][u],RCD_6,u)
 
-    for u in range(len(RCD_6)):
-        RCD_7.append([
+for h in range(1):
+    RCD_5 = []
+    RCD_6 = []
+    for u in range(len(List_of_Combinations[h+1])):
+                   moves(List_of_Combinations[h+1][u],RCD_5,u)
+
+    for u in range(len(RCD_5)):
+        RCD_6.append([
         [0,0,0,0,0,0,0,0,0],
         [1,1,1,1,1,1,1,1,1],
         [2,2,2,2,2,2,2,2,2],
@@ -466,20 +453,20 @@ for h in range(16):
         [4,4,4,4,4,4,4,4,4],
         [5,5,5,5,5,5,5,5,5]])
         for t in range(len(List_of_Combinations[h+1])):
-            if RCD_6[u] == List_of_Combinations[h+1][t] or RCD_6[u] == RCD:
+            if RCD_5[u] == List_of_Combinations[h+1][t] or RCD_5[u] == RCD:
                 break
             if t == len(List_of_Combinations[h+1])-1:
                 for x in range(6):
                     for y in range(9):
-                        RCD_7[u][x][y] = RCD_6[u][x][y]
+                        RCD_6[u][x][y] = RCD_5[u][x][y]
 
-    for u in range(RCD_7.count(RCD)):
-        RCD_7.remove(RCD)
+    for u in range(RCD_6.count(RCD)):
+        RCD_6.remove(RCD)
 
-    for u in range(len(RCD_7)):
-        RCD_4.append(RCD_7[u])
+    for u in range(len(RCD_6)):
+        RCD_4.append(RCD_6[u])
 
-    List_of_Combinations[h+2] = copy.deepcopy(RCD_7)
+    List_of_Combinations[h+2] = copy.deepcopy(RCD_6)
 
     for u in range(len(RCD_4)):
         for v in range(len(RCD_4)):
@@ -487,8 +474,9 @@ for h in range(16):
                 for w in range(List_of_Combinations[h+2].count(RCD_4[v])-1):
                     List_of_Combinations[h+2].remove(RCD_4[v])
 
-
-print("Combination of first Step: {}".format(len(RCD_3)))
-print("Combination of second Step: {}".format(len(RCD_5)))
-for u in range(16):
-    print(str(len(List_of_Combinations[u+2])))
+Comb_3 = copy.deepcopy(List_of_Combinations[2])
+print("Combinations in 1st Step: {}".format(len(Comb_1)))
+print("Combinations in 2nd Step: {}".format(len(Comb_2)))
+print("Combinations in 3rd Step: {}".format(len(Comb_3)))
+for u in range(15):
+    print("Combinations in {}th Step: {}".format(u+4,len(List_of_Combinations[u+3])))
